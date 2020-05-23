@@ -13,7 +13,7 @@ class UserRegistrationForm(UserCreationForm):
 
 
 ACCOUNT_TYPES = (
-    ('person', 'PERSON'),
+    ('patient', 'PATIENT'),
     ('doctor', 'DOCTOR')
 )
 

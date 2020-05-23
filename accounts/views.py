@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from .forms import UserRegistrationForm,ProfileUpdateForm
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile,PatientBio,DoctorBio
+
 
 def register(request):
     if request.method == 'POST':
@@ -11,10 +12,17 @@ def register(request):
 
         if u_form.is_valid() and p_form.is_valid() :
             u_form.save()
-            profile = Profile.objects.create(user=User.objects.get(username=u_form.cleaned_data.get('username')))
+            user = User.objects.get(username=u_form.cleaned_data.get('username'))
+            profile = Profile.objects.create(user= user)
             profile.type = p_form.cleaned_data.get('type')
             profile.save()
-            messages.success(request,'successfully created profile!')
+            if profile.type in ['PATIENT','patient']:
+                patient = PatientBio.objects.create(patient =user)
+                patient.save()
+            else:
+                doctor  = DoctorBio.objects.create(doctor = user)
+                doctor.save()
+            messages.success(request,'successfully registered!')
             return redirect('home')
     else :
         u_form = UserRegistrationForm()
@@ -24,3 +32,7 @@ def register(request):
         'p_form':p_form,
     }
     return render(request,'accounts/register.html',context)
+
+
+def index(request):
+    return render(request,'accounts/base.html')
