@@ -6,5 +6,9 @@ urlpatterns = [
     path('med-history/<str:type>/',user_views.medical_history,name='medical'),
     path('login/', auth_views.LoginView.as_view(template_name='accounts/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='accounts/logout.html'), name='logout'),
-    path('appointments/<str:type>/',user_views.appointments,name='appointments')
+    path('appointments/<str:type>/',user_views.appointments,name='appointments'),
+    path('prescriptions/create/',
+            user_views.prescription_create,
+            name='prescription-create')
+
 ]

@@ -66,7 +66,7 @@ class Appointment(models.Model):
 
 
 class MedicalHistory(models.Model):
-    date =models.DateField()
+    date =models.DateField(auto_now_add = True)
     symptoms= models.TextField()
     doctor_name= models.ForeignKey(User ,related_name='medical_doctor',on_delete=models.CASCADE)
     patient_name=models.ForeignKey(User,related_name='medical_patient',on_delete=models.CASCADE)
