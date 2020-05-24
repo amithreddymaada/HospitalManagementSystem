@@ -10,6 +10,14 @@ urlpatterns = [
     path('prescriptions/create/',
             user_views.prescription_create,
             name='prescription-create'),
+<<<<<<< HEAD
     path('patientbio/<int:pk>', user_views.PatientBioUpdateView.as_view(), name='p-update'),
+=======
+    path('receptionist/appointments/',user_views.receptionist_appointments_list,name='receptionist-appointments'),
+    path('receptionist/appointments/create/',user_views.appointment_create,name='receptionist-appointments-create'),
+    path('receptionist/appointments/<int:pk>/update/',
+        user_views.AppointmentUpdateView.as_view(),
+        name='receptionist-appointments-update'),
+>>>>>>> 0094bba5cbb85712ba254d411c9dceb565d432d7
 
 ]

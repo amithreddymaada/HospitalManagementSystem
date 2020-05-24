@@ -22,6 +22,7 @@ class ProfileUpdateForm(forms.Form):
 
 data = Profile.objects.filter(type='patient')
 PATIENTS = list()
+
 for user in data:
     PATIENTS.append((user.user.username,user.user.username.upper()))
 
@@ -29,5 +30,22 @@ class MedicalHistoryForm(forms.Form):
     patient_name = forms.ChoiceField(choices = PATIENTS)
     symptoms = forms.CharField()
     prescription = forms.CharField(widget=forms.Textarea)
+
+DOCTORS = list()
+data = Profile.objects.filter(type='doctor')
+
+for user in data:
+    DOCTORS.append((user.user.username,user.user.username.upper()))
+
+STATUS = (
+    ('pending', 'PENDING'),
+    ('completed', 'COMPLETED')
+)
+class AppointmentForm(forms.Form):
+    patient_name = forms.ChoiceField(choices = PATIENTS)
+    consulting_doctor = forms.ChoiceField(choices = DOCTORS)
+    status = forms.ChoiceField(choices = STATUS)
+    date = forms.DateField()
+    time = forms.TimeField()
     
 
