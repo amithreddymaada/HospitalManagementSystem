@@ -28,14 +28,6 @@
               <!-- Navbar Right Side -->
               <div class="navbar-nav">
                 {% if user.is_authenticated %}
-<<<<<<< HEAD
-
-                    {% if user.profile.type == "DOCTOR" %}
-                    <a class="nav-item nav-link" href="#"Doctor Profile></a>
-                    {% endif %}
-                  <a class="nav-item nav-link" href="#">Profile</a>
-                  <a class="nav-item nav-link" href="{% url 'logout'%}">Logout</a>
-=======
                   {% if user.profile.type == 'patient' %}
                     <a class="nav-item nav-link" href="#">Appointements</a>
                     <a class="nav-item nav-link" href="#">Invoice & Payments</a>
@@ -52,7 +44,6 @@
                     <a class="nav-item nav-link" href="{% url 'logout'%}">Logout</a>
                   {% endif %}
                   
->>>>>>> b5f47062d24402bb239a640de58c24b1ac15a72b
                 {% else %}
                   <a class="nav-item nav-link" href="{% url 'login'%}">Login</a>
                   <a class="nav-item nav-link" href="#">Register</a>
