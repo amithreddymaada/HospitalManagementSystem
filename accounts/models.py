@@ -28,7 +28,7 @@ class PatientBio(models.Model):
     age = models.IntegerField(null=True)
     address = models.TextField(null=True)
     blood_group = models.CharField(max_length = 4,null=True)
-    medical_reports = models.FileField(null=True)
+    
 
     def __str__(self):
         return f'{self.patient.username} patient'

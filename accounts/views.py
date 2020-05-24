@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import UserRegistrationForm,ProfileUpdateForm,MedicalHistoryForm, AppointmentForm
+from .forms import UserRegistrationForm,ProfileUpdateForm,MedicalHistoryForm, AppointmentForm,UserUpdateForm,PatientUpdateForm,DoctorUpdateForm
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .models import Profile,PatientBio,DoctorBio, Appointment
@@ -112,22 +112,54 @@ def appointment_create(request):
 
 
 
+@login_required
+def patient_profile(request):
+    if request.method == 'POST':
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        p_form = PatientUpdateForm(request.POST,
+                                   request.FILES,
+                                   instance=request.user.patientbio)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.success(request, f'Your account has been updated!')
+            return redirect('p-update')
+
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = PatientUpdateForm(instance=request.user.patientbio)
+
+    context = {
+        'u_form': u_form,
+        'p_form': p_form
+    }
+
+    return render(request, 'accounts/update.html', context)
 
 
 
-class PatientBioUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    model = PatientBio
-    template_name = 'accounts/patient_update.html'
-    fields = [ 'gender','age','address','blood_group','medical_reports']
+@login_required
+def doctor_profile(request):
+    if request.method == 'POST':
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        p_form = DoctorUpdateForm(request.POST,
+                                   request.FILES,
+                                   instance=request.user.doctorbio)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.success(request, f'Your account has been updated!')
+            return redirect('d-update')
 
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = DoctorUpdateForm(instance=request.user.doctorbio)
 
-    def test_func(self):
-        post = self.get_object()
-        if self.request.user == PatientBio.patient:
-            return True
-        return False
+    context = {
+        'u_form': u_form,
+        'p_form': p_form
+    }
+
+    return render(request, 'accounts/update.html', context)
 
 

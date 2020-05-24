@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Profile,MedicalHistory
+from .models import Profile,MedicalHistory,PatientBio,DoctorBio
 
 
 class UserRegistrationForm(UserCreationForm):
@@ -48,4 +48,28 @@ class AppointmentForm(forms.Form):
     date = forms.DateField()
     time = forms.TimeField()
     
+
+class UserUpdateForm(forms.ModelForm):
+    email = forms.EmailField()
+    
+
+    class Meta:
+        model = User
+        fields = ['username','first_name','last_name', 'email']
+
+
+class PatientUpdateForm(forms.ModelForm):
+    
+    class Meta:
+        model = PatientBio
+        fields = [ 'gender','age','address','blood_group']
+
+
+class DoctorUpdateForm(forms.ModelForm):
+    
+    class Meta:
+        model = DoctorBio
+        fields = [ 'gender','age','status','department','attendence','salary']
+
+
 

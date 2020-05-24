@@ -32,19 +32,19 @@
                     <a class="nav-item nav-link" href="{% url 'appointments' user.profile.type %}">Appointements</a>
                     <a class="nav-item nav-link" href="#">Invoice & Payments</a>
                     <a class="nav-item nav-link" href="{% url 'medical' user.profile.type %}">Medical History</a>
-                    <a class="nav-item nav-link" href="{% url 'p-update' user.id %}">Profile</a>
+                    <a class="nav-item nav-link" href="{% url 'p-update'%}">Profile</a>
                     <a class="nav-item nav-link" href="{% url 'logout'%}">Logout</a>
                   {% elif user.profile.type == 'doctor' %}
                     <a class="nav-item nav-link" href="{% url 'appointments' user.profile.type %}">Appointements</a>
                     <a class="nav-item nav-link" href="{% url 'medical' user.profile.type %}">Prescriptions</a>
-                    <a class="nav-item nav-link" href="#">Profile</a>
+                    <a class="nav-item nav-link" href="{% url 'd-update'%}">Profile</a>
                     <a class="nav-item nav-link" href="{% url 'logout'%}">Logout</a>
                   {% elif user.profile.type == 'receptionist' %}
                     <a class="nav-item nav-link" href="{% url 'receptionist-appointments' %}">Appointements</a>
                     <a class="nav-item nav-link" href="#">Patients</a>
                     <a class="nav-item nav-link" href="{% url 'logout'%}">Logout</a>
                   {% endif %}
-                  
+      
                 {% else %}
                   <a class="nav-item nav-link" href="{% url 'login'%}">Login</a>
                   <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
