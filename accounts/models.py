@@ -6,7 +6,6 @@ ACCOUNT_TYPES = (
     ('doctor', 'DOCTOR')
 )
 
-
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     type = models.CharField(max_length=6, choices=ACCOUNT_TYPES)
