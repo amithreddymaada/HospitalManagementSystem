@@ -3,6 +3,7 @@ from .forms import UserRegistrationForm,ProfileUpdateForm
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .models import Profile,PatientBio,DoctorBio
+from django.contrib.auth.decorators import login_required
 
 
 def register(request):
@@ -32,7 +33,8 @@ def register(request):
     }
     return render(request,'accounts/register.html',context)
 
-
+@login_required
 def index(request):
-    # print(Profile.objects.get(user = request.user).type)
     return render(request,'accounts/base.html')
+
+

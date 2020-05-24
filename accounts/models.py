@@ -29,6 +29,9 @@ class PatientBio(models.Model):
     blood_group = models.CharField(max_length = 4,null=True)
     medical_reports = models.FileField(null=True)
 
+    def __str__(self):
+        return f'{self.patient.username} patient'
+
 STATUS = (
     ('active', 'ACTIVE'),
     ('inactive', 'INACTIVE'),
@@ -42,3 +45,6 @@ class DoctorBio(models.Model):
     department = models.CharField(max_length=20,null=True)
     attendence = models.FloatField(null=True)
     salary = models.IntegerField(null=True)
+
+    def __str__(self):
+        return f'{self.doctor.username} doctor'
