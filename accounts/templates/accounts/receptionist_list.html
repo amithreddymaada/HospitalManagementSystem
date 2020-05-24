@@ -1,0 +1,65 @@
+{% extends "accounts/base.html" %}
+{% block content %}
+    <div class="container">
+        <h2 class="page-header lead">Patients List: </h2>
+        <br/>
+        <table class="table table-striped table-bordered table-hover table-condensed">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Gender</th>
+                <th>Blood-Group</th>
+                <th>Age</th>
+                <th>Address</th>
+            </tr>
+    
+                {% for patient in patients %}
+                    <tr>
+                        <td>{{patient.username}}</td>
+                        <td>{{patient.email}}</td>
+                        <td>{{patient.first_name}}</td>
+                        <td>{{patient.last_name}}</td>
+                        <td>{{patient.patientbio.gender}}</td>
+                        <td>{{patient.patientbio.blood_group}}</td>
+                        <td>{{patient.patientbio.age}}</td>
+                        <td>{{patient.patientbio.address}}</td>
+                    </tr>
+                {% endfor %} 
+        </table>
+        <hr/>
+        <br>
+        <h2 class="page-header lead">Doctors List: </h2>
+        <br/>
+        <table class="table table-striped table-bordered table-hover table-condensed">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Gender</th>
+                <th>Status</th>
+                <th>Age</th>
+                <th>Department</th>
+                <th>Attendence</th>
+                <th>Salary</th>
+            </tr>
+    
+                {% for doctor in doctors %}
+                    <tr>
+                        <td>{{doctor.username}}</td>
+                        <td>{{doctor.email}}</td>
+                        <td>{{doctor.first_name}}</td>
+                        <td>{{doctor.last_name}}</td>
+                        <td>{{doctor.doctorbio.gender}}</td>
+                        <td>{{doctor.doctorbio.status}}</td>
+                        <td>{{doctor.doctorbio.age}}</td>
+                        <td>{{doctor.doctorbio.department}}</td>
+                        <td>{{doctor.doctorbio.attendence}}</td>
+                        <td>{{doctor.doctorbio.salary}}</td>
+                    </tr>
+                {% endfor %} 
+        </table>
+    </div>
+{% endblock content %}

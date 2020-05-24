@@ -162,4 +162,18 @@ def doctor_profile(request):
 
     return render(request, 'accounts/update.html', context)
 
+@login_required
+def accounts_list(request):
+    users = Profile.objects.filter(type='patient')
+    patients = list()
+    for user in users:
+        patients.append(user.user)
+    users = Profile.objects.filter(type='doctor')
+    doctors = list()
+    for user in users:
+        doctors.append(user.user)
+    
+
+    return render(request,'accounts/receptionist_list.html',{'patients':patients,'doctors':doctors})
+
 

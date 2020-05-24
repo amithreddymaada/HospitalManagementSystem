@@ -18,6 +18,7 @@ urlpatterns = [
     path('receptionist/appointments/<int:pk>/update/',
         user_views.AppointmentUpdateView.as_view(),
         name='receptionist-appointments-update'),
+    path('receptionist/accounts/list/',user_views.accounts_list,name='list'),
 
 
 ]

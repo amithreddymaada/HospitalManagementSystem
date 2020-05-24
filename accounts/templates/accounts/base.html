@@ -41,7 +41,7 @@
                     <a class="nav-item nav-link" href="{% url 'logout'%}">Logout</a>
                   {% elif user.profile.type == 'receptionist' %}
                     <a class="nav-item nav-link" href="{% url 'receptionist-appointments' %}">Appointements</a>
-                    <a class="nav-item nav-link" href="#">Patients</a>
+                    <a class="nav-item nav-link" href="{% url 'list' %}">List</a>
                     <a class="nav-item nav-link" href="{% url 'logout'%}">Logout</a>
                   {% endif %}
       
