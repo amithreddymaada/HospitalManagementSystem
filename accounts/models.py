@@ -61,3 +61,19 @@ class Appointment(models.Model):
 
     def __str__(self):
         return f'appointement patient-{self.patient_name} doctor-{self.consulting_doctor}'
+
+
+
+
+class MedicalHistory(models.Model):
+    date =models.DateField()
+    symptoms= models.TextField()
+    doctor_name= models.ForeignKey(User ,related_name='doctor_name',on_delete=models.CASCADE)
+    patient_name=models.ForeignKey(User,related_name='patient_name',on_delete=models.CASCADE)
+    prescription=models.TextField(max_length=1000)
+
+    def __str__(self):
+        return 'medical-history-patient'+self.patient_name.username+':doctor'+self.doctor_name.username
+
+
+

@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from .models import Profile,PatientBio,DoctorBio, Appointment
 from django.contrib.auth.decorators import login_required
+from .models import MedicalHistory
 
 
 def register(request):
@@ -45,5 +46,12 @@ def appointments(request,type):
         data = Appointment.objects.filter(consulting_doctor = request.user)
     return render(request,'accounts/appointments.html',{'appointments':data,'type':type})
 
+@login_required
+def medical_history(request,type):
+    if type== "patient":
+        data =MedicalHistory.objects.filter(patient_name=request.user)
+    else:
+        data=MedicalHistory.objects.filter(doctor_name=request.user)
+    return render(request,'accounts/medical_history.html',{'data':data,'type':type})
 
 
