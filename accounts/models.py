@@ -47,3 +47,17 @@ class DoctorBio(models.Model):
 
     def __str__(self):
         return f'{self.doctor.username} doctor'
+
+STATUS = (
+    ('pending', 'PENDING'),
+    ('completed', 'COMPLETED')
+)
+class Appointment(models.Model):
+    patient_name = models.ForeignKey(User, related_name='patient_name',on_delete = models.CASCADE)
+    consulting_doctor = models.ForeignKey(User,related_name='consulting_doctor',on_delete = models.CASCADE)
+    status = models.CharField(max_length=15,choices = STATUS)
+    date = models.DateField(auto_now_add = True)
+    time = models.TimeField(auto_now_add = True)
+
+    def __str__(self):
+        return f'appointement patient-{self.patient_name} doctor-{self.consulting_doctor}'

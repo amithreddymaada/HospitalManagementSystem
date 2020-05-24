@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import UserRegistrationForm,ProfileUpdateForm
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .models import Profile,PatientBio,DoctorBio
+from .models import Profile,PatientBio,DoctorBio, Appointment
 from django.contrib.auth.decorators import login_required
 
 
@@ -36,5 +36,14 @@ def register(request):
 @login_required
 def index(request):
     return render(request,'accounts/base.html')
+
+@login_required
+def appointments(request,type):
+    if type == 'patient':
+        data = Appointment.objects.filter(patient_name = request.user)
+    else :
+        data = Appointment.objects.filter(consulting_doctor = request.user)
+    return render(request,'accounts/appointments.html',{'appointments':data,'type':type})
+
 
 

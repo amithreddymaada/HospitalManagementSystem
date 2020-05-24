@@ -1,0 +1,39 @@
+{% extends "accounts/base.html" %}
+{% block content %}
+    <div class="container">
+        <h2 class="page-header lead">Appointments of : {{user.username}}</h2>
+        <br/>
+        <table class="table table-striped table-bordered table-hover table-condensed">
+            <tr>
+                <th>Date</th>
+                <th>Time</th>
+                {% if type == 'patient' %}
+                    <th>Consulting Doctor</th>
+                {% else %}
+                    <th>Patient Name</th>
+                {% endif %}
+                <th>Status </th>
+            </tr>
+              {% if type == 'patient' %}
+                {% for appointment in appointments %}
+                    <tr>
+                        <td>{{appointment.date}}</td>
+                        <td>{{appointment.time}}</td>
+                        <td>{{appointment.consulting_doctor}}</td>
+                        <td>{{appointment.status}} </td>
+                    </tr>
+                {% endfor %}
+              {% else%}
+                {% for appointment in appointments %}
+                    <tr>
+                        <td>{{appointment.date}}</td>
+                        <td>{{appointment.time}}</td>
+                        <td>{{appointment.patient_name}}</td>
+                        <td>{{appointment.status}} </td>
+                    </tr>
+                {% endfor %}
+              {% endif %}
+                
+        </table>
+    </div>
+{% endblock content %}
