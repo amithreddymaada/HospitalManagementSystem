@@ -43,17 +43,17 @@ def index(request):
 @login_required
 def appointments(request,type):
     if type == 'patient':
-        data = Appointment.objects.filter(patient_name = request.user)
+        data = Appointment.objects.filter(patient_name = request.user).order_by('-date','-time')
     else :
-        data = Appointment.objects.filter(consulting_doctor = request.user)
+        data = Appointment.objects.filter(consulting_doctor = request.user).order_by('-date','-time')
     return render(request,'accounts/appointments.html',{'appointments':data,'type':type})
 
 @login_required
 def medical_history(request,type):
     if type== "patient":
-        data =MedicalHistory.objects.filter(patient_name=request.user)
+        data =MedicalHistory.objects.filter(patient_name=request.user).order_by('-date','-id')
     else:
-        data=MedicalHistory.objects.filter(doctor_name=request.user)
+        data=MedicalHistory.objects.filter(doctor_name=request.user).order_by('-date','-id')
     return render(request,'accounts/medical_history.html',{'data':data,'type':type})
 
 
