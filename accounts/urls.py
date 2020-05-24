@@ -9,6 +9,7 @@ urlpatterns = [
     path('appointments/<str:type>/',user_views.appointments,name='appointments'),
     path('prescriptions/create/',
             user_views.prescription_create,
-            name='prescription-create')
+            name='prescription-create'),
+    path('patientbio/<int:pk>', user_views.PatientBioUpdateView.as_view(), name='p-update'),
 
 ]

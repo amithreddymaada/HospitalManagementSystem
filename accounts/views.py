@@ -8,6 +8,8 @@ from .models import MedicalHistory
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.views.generic import CreateView
 from django.core.exceptions import ValidationError
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic import UpdateView
 
 def register(request):
     if request.method == 'POST':
@@ -79,5 +81,21 @@ def prescription_create(request):
 
 
 
+
+
+class PatientBioUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = PatientBio
+    template_name = 'accounts/patient_update.html'
+    fields = [ 'gender','age','address','blood_group','medical_reports']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == PatientBio.patient:
+            return True
+        return False
 
 
