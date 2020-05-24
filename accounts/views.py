@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from .models import Profile,PatientBio,DoctorBio
 from django.contrib.auth.decorators import login_required
+from .models import MedicalHistory
 
 
 def register(request):
@@ -36,5 +37,13 @@ def register(request):
 @login_required
 def index(request):
     return render(request,'accounts/base.html')
+
+@login_required
+def medical_history(request,type):
+    if type== "patient":
+        data =MedicalHistory.objects.filter(patient_name=request.user)
+    else:
+        data=MedicalHistory.objects.filter(doctor_name=request.user)
+    return render(request,'accounts/medical_history.html',{'data':data,'type':type})
 
 

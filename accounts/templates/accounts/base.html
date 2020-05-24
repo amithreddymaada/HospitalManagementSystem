@@ -31,12 +31,12 @@
                   {% if user.profile.type == 'patient' %}
                     <a class="nav-item nav-link" href="#">Appointements</a>
                     <a class="nav-item nav-link" href="#">Invoice & Payments</a>
-                    <a class="nav-item nav-link" href="#">Medical History</a>
+                    <a class="nav-item nav-link" href="{% url 'medical' user.profile.type %}">Medical History</a>
                     <a class="nav-item nav-link" href="#">Profile</a>
                     <a class="nav-item nav-link" href="{% url 'logout'%}">Logout</a>
                   {% elif user.profile.type == 'doctor' %}
                     <a class="nav-item nav-link" href="#">Appointements</a>
-                    <a class="nav-item nav-link" href="#">Prescriptions</a>
+                    <a class="nav-item nav-link" href="{% url 'medical' user.profile.type %}">Prescriptions</a>
                     <a class="nav-item nav-link" href="#">Profile</a>
                     <a class="nav-item nav-link" href="{% url 'logout'%}">Logout</a>
                   {% elif user.profile.type == 'receptionist' %}
