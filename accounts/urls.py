@@ -9,6 +9,11 @@ urlpatterns = [
     path('appointments/<str:type>/',user_views.appointments,name='appointments'),
     path('prescriptions/create/',
             user_views.prescription_create,
-            name='prescription-create')
+            name='prescription-create'),
+    path('receptionist/appointments/',user_views.receptionist_appointments_list,name='receptionist-appointments'),
+    path('receptionist/appointments/create/',user_views.appointment_create,name='receptionist-appointments-create'),
+    path('receptionist/appointments/<int:pk>/update/',
+        user_views.AppointmentUpdateView.as_view(),
+        name='receptionist-appointments-update'),
 
 ]

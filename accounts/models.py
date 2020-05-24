@@ -3,12 +3,14 @@ from django.contrib.auth.models import User
 
 ACCOUNT_TYPES = (
     ('person', 'PERSON'),
-    ('doctor', 'DOCTOR')
+    ('doctor', 'DOCTOR'),
+    ('receptionist', 'RECEPTIONIST'),
+    ('hr', 'HR'),
 )
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name = 'profile')
-    type = models.CharField(max_length=6, choices=ACCOUNT_TYPES)
+    type = models.CharField(max_length=15, choices=ACCOUNT_TYPES)
 
     def __str__(self):
         return f'{self.user.username} '+self.type

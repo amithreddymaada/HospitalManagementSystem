@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect
-from .forms import UserRegistrationForm,ProfileUpdateForm,MedicalHistoryForm
+from .forms import UserRegistrationForm,ProfileUpdateForm,MedicalHistoryForm, AppointmentForm
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .models import Profile,PatientBio,DoctorBio, Appointment
 from django.contrib.auth.decorators import login_required
 from .models import MedicalHistory
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
-from django.views.generic import CreateView
+from django.views.generic import CreateView,UpdateView
 from django.core.exceptions import ValidationError
 
 def register(request):
@@ -76,6 +76,38 @@ def prescription_create(request):
     else:
         form = MedicalHistoryForm()
     return render(request,'accounts/prescription_create.html',{'form':form})
+
+@login_required
+def receptionist_appointments_list(request):
+    appointments = Appointment.objects.all().order_by('-date','-time', '-id')
+    return render(request,'accounts/reception_appointments.html',{'appointments':appointments})
+
+class AppointmentUpdateView(LoginRequiredMixin,UpdateView):
+    model = Appointment
+    fields = ['status']
+    template_name='accounts/receptionist_appointment_form.html'
+    success_url = '/accounts/receptionist/appointments/'
+
+def appointment_create(request):
+    if request.method == 'POST':
+        form = AppointmentForm(request.POST)
+        if form.is_valid():
+            patient = User.objects.get(username=form.cleaned_data['patient_name'])
+            doctor = User.objects.get(username=form.cleaned_data['consulting_doctor'])
+            appointment = Appointment.objects.create(
+                 patient_name = patient,
+                 consulting_doctor = doctor,
+                 status = form.cleaned_data['status'],
+                 date = form.cleaned_data['date'],
+                 time = form.cleaned_data['time']
+                 )
+            appointment.save()
+            messages.success(request,'appointment added')
+        return redirect('/accounts/receptionist/appointments/')
+    else:
+        form = AppointmentForm()
+    return render(request,'accounts/receptionist_appointment_form.html',{'form':form})
+
 
 
 
