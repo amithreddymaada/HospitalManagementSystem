@@ -13,9 +13,8 @@ def register(request):
         if u_form.is_valid() and p_form.is_valid() :
             u_form.save()
             user = User.objects.get(username=u_form.cleaned_data.get('username'))
-            profile = Profile.objects.create(user= user)
-            profile.type = p_form.cleaned_data.get('type')
-            profile.save()
+            profile = Profile.objects.create(user= user,type=p_form.cleaned_data.get('type'))
+            user.profile.save()
             if profile.type in ['PATIENT','patient']:
                 patient = PatientBio.objects.create(patient =user)
                 patient.save()
@@ -35,4 +34,5 @@ def register(request):
 
 
 def index(request):
+    # print(Profile.objects.get(user = request.user).type)
     return render(request,'accounts/base.html')
