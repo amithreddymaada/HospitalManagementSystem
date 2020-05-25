@@ -80,5 +80,11 @@ python manage.py migrate
 python manage.py runserver 0.0.0.0:8080
 ```
 
+## creation of hr, receptionist
+```bash
+python manage.py createsuperuser
+```
+using the superuser credentials, create the user accounts of hr, receptionist in django adminstration.
+also create profile of respected type of account in Profile model.
 
 
