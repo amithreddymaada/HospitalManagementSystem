@@ -43,7 +43,7 @@ class DoctorBio(models.Model):
     doctor = models.OneToOneField(User,on_delete = models.CASCADE, default = 1)
     gender = models.CharField(max_length = 8,choices = GENDER,null=True)
     age = models.IntegerField(null=True)
-    status = models.CharField(max_length = 9,choices = STATUS,null=True)
+    status = models.CharField(max_length = 9,choices = STATUS,default="active")
     department = models.CharField(max_length=20,null=True)
     attendence = models.FloatField(null=True)
     salary = models.IntegerField(null=True)
