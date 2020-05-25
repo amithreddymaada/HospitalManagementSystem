@@ -44,6 +44,9 @@
                     <a class="nav-item nav-link" href="{% url 'pending-payments' %}">Pending Payments</a>
                     <a class="nav-item nav-link" href="{% url 'list' %}">List</a>
                     <a class="nav-item nav-link" href="{% url 'logout'%}">Logout</a>
+                  {% elif user.profile.type == 'hr' %}
+                    <a class="nav-item nav-link" href="{% url 'hr-dashboard' %}">Dashboard</a>
+                    <a class="nav-item nav-link" href="{% url 'logout'%}">Logout</a>
                   {% endif %}
       
                 {% else %}

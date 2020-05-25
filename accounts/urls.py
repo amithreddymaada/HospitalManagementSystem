@@ -24,5 +24,6 @@ urlpatterns = [
     path('patient/<str:username>/payments/',user_views.patient_payments,name='patient-payments'),
     path('patient/payments/<int:pk>/update/',user_views.PatientPaymentsUpdateView.as_view(),name='patient-payments-update'),
     path('patient/prescription/<int:pk>/detail/',user_views.MedicalHistoryDetailView.as_view(),name='patient-prescription-detail'),
+    path('hr/dashboard/',user_views.hr_dashboard,name='hr-dashboard'),
 
 ]

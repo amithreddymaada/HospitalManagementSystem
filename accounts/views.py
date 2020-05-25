@@ -235,6 +235,40 @@ class MedicalHistoryDetailView(LoginRequiredMixin,UserPassesTestMixin,DetailView
             return True
         return False
 
+@login_required
+def hr_dashboard(request):
+    users = Profile.objects.filter(type='patient')
+    patients = list()
+    for user in users:
+        patients.append(user.user)
+    users = Profile.objects.filter(type='doctor')
+    doctors = list()
+    on_duty_doctors = list()
+    for user in users:
+        doctors.append(user.user)
+        if user.user.doctorbio.status == "active":
+            on_duty_doctors.append(user.user)
+    payments_list = Payments.objects.all()
+    total_amount_billed = 0
+    amount_paid = 0
+    for payments in payments_list:
+        if payments.total_amount:
+            total_amount_billed += payments.total_amount
+        if payments.amount_paid:
+            amount_paid += payments.amount_paid
+    context = {
+        'patients':patients,
+        'doctors':doctors,
+        'on_duty_doctors': on_duty_doctors,
+        'total_amount':total_amount_billed,
+        'amount_paid':amount_paid,
+        'num_doctors':len(doctors),
+        'num_patients':len(patients),
+        'num_onduty':len(on_duty_doctors)
+    }
+    return render(request,'accounts/hr_dashboard.html',context)
+
+
 
 
 
