@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from .models import Profile,PatientBio,DoctorBio, Appointment
 from django.contrib.auth.decorators import login_required
-from .models import MedicalHistory
+from .models import MedicalHistory, Payments
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.views.generic import CreateView,UpdateView
 from django.core.exceptions import ValidationError
@@ -73,6 +73,9 @@ def prescription_create(request):
                  symptoms = form.cleaned_data['symptoms'],
                  prescription = form.cleaned_data['prescription'] )
             prescription.save()
+            pay = Payments.objects.create(medical_report = prescription)
+            prescription.payments.save()
+
             messages.success(request,'successfully added prescription')
         return redirect('/accounts/med-history/doctor/')
     else:
@@ -175,5 +178,32 @@ def accounts_list(request):
     
 
     return render(request,'accounts/receptionist_list.html',{'patients':patients,'doctors':doctors})
+
+@login_required
+def pending_payments(request):
+    payments = list()
+    for payment in Payments.objects.all():
+        if payment.medical_report.billed == "no":
+            payments.append(payment)
+    return render(request, 'accounts/pending_payments.html',{'payments':payments})
+
+class PaymentsUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
+    model = Payments
+    fields = ['total_amount']
+    template_name = 'accounts/payments_update.html'
+    success_url = '/accounts/receptionist/pending-payments/'
+
+    def form_valid(self,form):
+        pay = Payments.objects.get(id=form.instance.id)
+        pay.medical_report.billed = "yes"
+        pay.medical_report.save()
+        print(pay.medical_report.billed)
+        print(pay.medical_report.patient_name)
+        return super().form_valid(form)
+    def test_func(self):
+        if self.request.user.profile.type == "receptionist":
+            return True
+        return False
+
 
 

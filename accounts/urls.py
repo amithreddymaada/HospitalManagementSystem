@@ -19,6 +19,8 @@ urlpatterns = [
         user_views.AppointmentUpdateView.as_view(),
         name='receptionist-appointments-update'),
     path('receptionist/accounts/list/',user_views.accounts_list,name='list'),
+    path('receptionist/pending-payments/',user_views.pending_payments,name='pending-payments'),
+    path('receptionist/pending-payments/<int:pk>/update/',user_views.PaymentsUpdateView.as_view(),name='pending-payments-update'),
 
 
 ]

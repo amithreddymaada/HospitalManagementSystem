@@ -1,0 +1,34 @@
+{% extends "accounts/base.html" %}
+{% block content %}
+    <div class="container">
+        {% if payments %}
+            <h2 class="page-header lead">Payments to be Processed: </h2>
+            <br/>
+            <table class="table table-striped table-bordered table-hover table-condensed">
+                <tr>
+                    <th>Patient Name</th>
+                    <th>Doctor Name</th>
+                    <th>Date</th>
+                    <th>Total Amount</th>
+                    <th>Update</th>
+                </tr>
+        
+                    {% for payment in payments %}
+                        <tr>
+                            <td>{{payment.medical_report.patient_name}}</td>
+                            <td>{{payment.medical_report.doctor_name}}</td>
+                            <td>{{payment.date}}</td>
+                            <td>{{payment.total_amount}}</td>
+                            <td><a class="btn btn-success" href="{% url 'pending-payments-update' payment.id %}">Update amount</a></td>
+                        </tr>
+                    {% endfor %} 
+            </table>
+            <hr/>
+            
+            <br/>
+        {% else %}
+         <h3>No Payments To be Processed.</h3>
+        {% endif %}
+        
+    </div>
+{% endblock content %}

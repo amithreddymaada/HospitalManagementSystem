@@ -66,6 +66,10 @@ class Appointment(models.Model):
 
 
 
+BILLED = (
+    ('yes','YES'),
+    ('no','NO')
+)
 
 class MedicalHistory(models.Model):
     date =models.DateField(auto_now_add = True)
@@ -73,9 +77,20 @@ class MedicalHistory(models.Model):
     doctor_name= models.ForeignKey(User ,related_name='medical_doctor',on_delete=models.CASCADE)
     patient_name=models.ForeignKey(User,related_name='medical_patient',on_delete=models.CASCADE)
     prescription=models.TextField(max_length=1000)
+    billed = models.CharField(max_length=10, choices=BILLED,default = 'no')
 
     def __str__(self):
         return 'medical-history-patient'+self.patient_name.username+':doctor'+self.doctor_name.username
+
+class Payments(models.Model):
+    medical_report = models.OneToOneField(MedicalHistory,on_delete = models.CASCADE)
+    total_amount = models.IntegerField(null=True)
+    amount_paid = models.IntegerField(default=0)
+    date = models.DateField(auto_now_add = True)
+
+
+    def __str__(self):
+        return f'{self.medical_report.patient_name} payment info'
 
 
 
