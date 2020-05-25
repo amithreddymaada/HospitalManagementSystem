@@ -2,29 +2,33 @@
 
 {% block content %}
     <div class="container">
-        <a href="{% url 'prescription-create' %}" class="btn btn-warning">Create Prescription</a>
-        <h1>{% if type == 'patient' %}
-            Medical History of {{user.username}}
-            {% else %}
-            <p>Prescription of {{user.username}}</p>
-            {% endif%}</h1>
-        <ul class="list-group">
-            {% for i in data %}
-                <li class="list-group-item">
-                    <p class="lead">Date: {{i.date}}</p>
-                  
-                    {% if type == 'patient' %}
-                    <p class="lead"> Doctor Name: {{i.doctor_name}}</p>
-                    {% else %}
-                    <p>Patient Name: {{i.patient_name}}</p>
-                    {% endif%}
+        {% if data %}
+            <a href="{% url 'prescription-create' %}" class="btn btn-warning">Create Prescription</a>
+            <h1>{% if type == 'patient' %}
+                Medical History of {{user.username}}
+                {% else %}
+                <p>Prescription of {{user.username}}</p>
+                {% endif%}</h1>
+            <ul class="list-group">
+                {% for i in data %}
+                    <li class="list-group-item">
+                        <p class="lead">Date: {{i.date}}</p>
                     
-                    <p class="lead">Symptoms: {{i.symptoms}}</p>
-                    
-                    <p class="lead">Prescription: {{i.prescription}}</p><br>
-                </li>
-                <hr>
-            {% endfor %}
-        </ul>
+                        {% if type == 'patient' %}
+                        <p class="lead"> Doctor Name: {{i.doctor_name}}</p>
+                        {% else %}
+                        <p>Patient Name: {{i.patient_name}}</p>
+                        {% endif%}
+                        
+                        <p class="lead">Symptoms: {{i.symptoms}}</p>
+                        
+                        <p class="lead">Prescription: {{i.prescription}}</p><br>
+                    </li>
+                    <hr>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <h3>No Reports Yet!</h3>
+        {% endif %}
     </div>
 {% endblock content %}
