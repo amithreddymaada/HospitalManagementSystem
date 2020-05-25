@@ -20,34 +20,37 @@ ACCOUNT_TYPES = (
 class ProfileUpdateForm(forms.Form):
     type = forms.ChoiceField(choices = ACCOUNT_TYPES)
 
-data = Profile.objects.filter(type='patient')
-PATIENTS = list()
-
-for user in data:
-    PATIENTS.append((user.user.username,user.user.username.upper()))
+def get_patients():
+        data = Profile.objects.filter(type='patient')
+        PATIENTS = list()
+        for user in data:
+            PATIENTS.append((user.user.username,user.user.username.upper()))
+        return PATIENTS
 
 class MedicalHistoryForm(forms.Form):
-    patient_name = forms.ChoiceField(choices = PATIENTS)
+    patient_name = forms.ChoiceField(choices = get_patients())
     symptoms = forms.CharField()
     prescription = forms.CharField(widget=forms.Textarea)
 
-DOCTORS = list()
-data = Profile.objects.filter(type='doctor')
-
-for user in data:
-    DOCTORS.append((user.user.username,user.user.username.upper()))
-
+    
 STATUS = (
     ('pending', 'PENDING'),
     ('completed', 'COMPLETED')
 )
+
+def get_doctors():
+        DOCTORS = list()
+        data = Profile.objects.filter(type='doctor')
+        for user in data:
+            DOCTORS.append((user.user.username,user.user.username.upper()))
+        return DOCTORS
+
 class AppointmentForm(forms.Form):
-    patient_name = forms.ChoiceField(choices = PATIENTS)
-    consulting_doctor = forms.ChoiceField(choices = DOCTORS)
+    patient_name = forms.ChoiceField(choices = get_patients())
+    consulting_doctor = forms.ChoiceField(choices = get_doctors())
     status = forms.ChoiceField(choices = STATUS)
     date = forms.DateField()
     time = forms.TimeField()
-    
 
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
