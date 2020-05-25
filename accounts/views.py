@@ -9,7 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.views.generic import CreateView,UpdateView
 from django.core.exceptions import ValidationError
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView,DetailView
 
 def register(request):
     if request.method == 'POST':
@@ -204,6 +204,38 @@ class PaymentsUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
         if self.request.user.profile.type == "receptionist":
             return True
         return False
+
+@login_required
+def patient_payments(request,username):
+    patient = User.objects.get(username=username)
+    payments = list()
+    for payment in Payments.objects.all():
+        if payment.medical_report.billed == "yes" and payment.medical_report.patient_name == patient:
+            payments.append(payment)
+    return render(request,'accounts/patient_payments.html',{'payments':payments})
+
+class PatientPaymentsUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
+    model = Payments
+    fields = ['amount_paid']
+    template_name = 'accounts/payments_update.html'
+
+    
+    def test_func(self):
+        payment = self.get_object()
+        if payment.medical_report.patient_name == self.request.user:
+            return True
+        return False
+
+class MedicalHistoryDetailView(LoginRequiredMixin,UserPassesTestMixin,DetailView):
+    model = MedicalHistory
+
+    def test_func(self):
+        obj = self.get_object()
+        if obj.patient_name == self.request.user:
+            return True
+        return False
+
+
 
 
 

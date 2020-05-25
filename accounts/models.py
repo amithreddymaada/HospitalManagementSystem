@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 ACCOUNT_TYPES = (
     ('person', 'PERSON'),
@@ -91,6 +92,9 @@ class Payments(models.Model):
 
     def __str__(self):
         return f'{self.medical_report.patient_name} payment info'
+    
+    def get_absolute_url(self):
+        return reverse('patient-payments', kwargs={'username':self.medical_report.patient_name.username})
 
 
 

@@ -30,7 +30,7 @@
                 {% if user.is_authenticated %}
                   {% if user.profile.type == 'patient' %}
                     <a class="nav-item nav-link" href="{% url 'appointments' user.profile.type %}">Appointements</a>
-                    <a class="nav-item nav-link" href="#">Invoice & Payments</a>
+                    <a class="nav-item nav-link" href="{% url 'patient-payments' user.username %}">Invoice & Payments</a>
                     <a class="nav-item nav-link" href="{% url 'medical' user.profile.type %}">Medical History</a>
                     <a class="nav-item nav-link" href="{% url 'p-update'%}">Profile</a>
                     <a class="nav-item nav-link" href="{% url 'logout'%}">Logout</a>

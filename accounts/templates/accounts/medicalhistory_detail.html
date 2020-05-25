@@ -1,0 +1,15 @@
+{% extends "accounts/base.html" %}
+{% block content %}
+    <article class="media content-section">
+        <div class="media-body">
+            <div class="list-group-item">
+                <p class="lead">Date: {{object.date}}</p>
+                <p class="lead"> Doctor Name: {{object.doctor_name}}</p>
+                <p class="lead">Symptoms: {{object.symptoms}}</p>
+                <p class="lead">Prescription: {{object.prescription}}</p><br>
+            </div>
+        </div>
+        
+    </article>
+    
+{% endblock content %}

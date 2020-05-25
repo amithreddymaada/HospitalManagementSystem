@@ -21,6 +21,8 @@ urlpatterns = [
     path('receptionist/accounts/list/',user_views.accounts_list,name='list'),
     path('receptionist/pending-payments/',user_views.pending_payments,name='pending-payments'),
     path('receptionist/pending-payments/<int:pk>/update/',user_views.PaymentsUpdateView.as_view(),name='pending-payments-update'),
-
+    path('patient/<str:username>/payments/',user_views.patient_payments,name='patient-payments'),
+    path('patient/payments/<int:pk>/update/',user_views.PatientPaymentsUpdateView.as_view(),name='patient-payments-update'),
+    path('patient/prescription/<int:pk>/detail/',user_views.MedicalHistoryDetailView.as_view(),name='patient-prescription-detail'),
 
 ]
